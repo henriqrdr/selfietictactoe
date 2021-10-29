@@ -1,12 +1,16 @@
 package com.example.selfietictactoe;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
@@ -37,8 +41,69 @@ public class MainActivity extends AppCompatActivity {
         b[7] = findViewById(R.id.button8);
         b[8] = findViewById(R.id.button9);
 
+        b[0].setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                turn(b[0],0,0);
 
+            }
+        });
+        b[1].setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                turn(b[1],0,1);
 
+            }
+        });
+        b[2].setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                turn(b[1],0,2);
+
+            }
+        });
+        b[3].setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                turn(b[3],1,0);
+
+            }
+        });
+        b[4].setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                turn(b[4],1,1);
+
+            }
+        });
+        b[5].setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                turn(b[5],1,2);
+
+            }
+        });
+        b[6].setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                turn(b[6],2,0);
+
+            }
+        });
+        b[7].setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                turn(b[7],2,1);
+
+            }
+        });
+        b[8].setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                turn(b[8],2,2);
+
+            }
+        });
     }
 
     @Override
@@ -56,7 +121,35 @@ public class MainActivity extends AppCompatActivity {
 
             case R.id.newItem:
 
-                Toast.makeText(getApplicationContext(), "Novo jogo", Toast.LENGTH_SHORT).show();
+                clean();
+
+                final EditText  editText2 = new EditText(this);
+                AlertDialog.Builder play2 = new AlertDialog.Builder(this);
+                play2.setMessage("Type a name");
+                play2.setTitle("Player 2");
+                play2.setView(editText2);
+                play2.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        player2 = editText2.getText().toString();
+                    }
+                });
+                play2.create();
+                play2.show();
+
+                final EditText  editText1 = new EditText(this);
+                AlertDialog.Builder play1 = new AlertDialog.Builder(this);
+                play1.setMessage("Type a name");
+                play1.setTitle("Player 1");
+                play1.setView(editText1);
+                play1.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        player1 = editText1.getText().toString();
+                    }
+                });
+                play1.create();
+                play1.show();
 
                 break;
 
@@ -71,15 +164,71 @@ public class MainActivity extends AppCompatActivity {
             b.setText("X");
             player = 2;
             winner = player1;
+            winCheck(1);
         }
-        else
-            mat[x][y]=2;
+        else {
+            mat[x][y] = 2;
             b.setText("O");
             player = 1;
             winner = player2;
-
+            winCheck(2);
+        }
+        qtd++;
 
     }
+
+    public boolean win(int x){
+
+        for(int i=0;i<mat.length;i++){
+
+            if(mat[i][0]==x && mat[i][1] ==x && mat[i][2] ==x)
+                return true;
+            if(mat[0][i]==x && mat[1][i] ==x && mat[2][1] ==x)
+                return true;
+            if(mat[0][0]==x && mat[1][1] ==x && mat[2][2] ==x)
+                return true;
+            if(mat[2][0]==x && mat[1][1] ==x && mat[0][2] ==x)
+                return true;
+
+        }
+        return false;
+    }
+
+    public void winCheck(int x){
+        if(win(x)==true){
+            AlertDialog.Builder winAlert = new AlertDialog.Builder(this);
+            winAlert.setTitle("WIN");
+            winAlert.setMessage("Player"+ winner +"win!");
+            winAlert.setIcon(android.R.drawable.star_on);
+            winAlert.setPositiveButton("OK",null);
+            winAlert.create();
+            winAlert.show();
+            endGame();
+        }
+    }
+
+    public void endGame(){
+        for(int i=0;i<9;i++){
+            b[i].setEnabled(false);
+        }
+    }
+
+    public void clean(){
+        for(int i=0;i<9;i++){
+            b[i].setEnabled(true);
+            b[i].setText("");
+        }
+        for(int j=0;j<3;j++){
+            for(int k=0;k<3;k++){
+                mat[j][k]=0;
+            }
+        }
+
+        player=0;
+        player1="";
+        player2="";
+    }
+
 
 
 }
