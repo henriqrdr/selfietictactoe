@@ -1,4 +1,4 @@
-# selfietictactoe
+# Jogo da velha com Selfies
 
 Objetivo : Testar o aprendizado dos alunos através da aplicação de conhecimentos adquiridos em sala de aula, em uma prática de desenvolvimento de uma aplicação móvel.
 
