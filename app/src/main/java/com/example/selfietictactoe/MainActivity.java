@@ -125,7 +125,7 @@ public class MainActivity extends AppCompatActivity {
 
                 final EditText  editText2 = new EditText(this);
                 AlertDialog.Builder play2 = new AlertDialog.Builder(this);
-                play2.setMessage("Type a name");
+                play2.setMessage("Name");
                 play2.setTitle("Player 2");
                 play2.setView(editText2);
                 play2.setPositiveButton("OK", new DialogInterface.OnClickListener() {
@@ -139,7 +139,7 @@ public class MainActivity extends AppCompatActivity {
 
                 final EditText  editText1 = new EditText(this);
                 AlertDialog.Builder play1 = new AlertDialog.Builder(this);
-                play1.setMessage("Type a name");
+                play1.setMessage("Name");
                 play1.setTitle("Player 1");
                 play1.setView(editText1);
                 play1.setPositiveButton("OK", new DialogInterface.OnClickListener() {
