@@ -58,7 +58,7 @@ public class MainActivity extends AppCompatActivity {
         b[2].setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                turn(b[1],0,2);
+                turn(b[2],0,2);
 
             }
         });
@@ -174,6 +174,11 @@ public class MainActivity extends AppCompatActivity {
             winCheck(2);
         }
         qtd++;
+        if(qtd >= 10){
+            Toast.makeText(MainActivity.this,
+                    "Your Message"+qtd + winner , Toast.LENGTH_LONG).show();
+            velha();
+        }
 
     }
 
@@ -183,7 +188,7 @@ public class MainActivity extends AppCompatActivity {
 
             if(mat[i][0]==x && mat[i][1] ==x && mat[i][2] ==x)
                 return true;
-            if(mat[0][i]==x && mat[1][i] ==x && mat[2][1] ==x)
+            if(mat[0][i]==x && mat[1][i] ==x && mat[2][i] ==x)
                 return true;
             if(mat[0][0]==x && mat[1][1] ==x && mat[2][2] ==x)
                 return true;
@@ -198,13 +203,23 @@ public class MainActivity extends AppCompatActivity {
         if(win(x)==true){
             AlertDialog.Builder winAlert = new AlertDialog.Builder(this);
             winAlert.setTitle("WIN");
-            winAlert.setMessage("Player"+ winner +"win!");
+            winAlert.setMessage("Player "+ winner +" win! ");
             winAlert.setIcon(android.R.drawable.star_on);
             winAlert.setPositiveButton("OK",null);
             winAlert.create();
             winAlert.show();
             endGame();
         }
+    }
+
+    public void velha(){
+            AlertDialog.Builder winAlert = new AlertDialog.Builder(this);
+            winAlert.setTitle("Velha");
+            winAlert.setIcon(android.R.drawable.alert_dark_frame);
+            winAlert.setPositiveButton("OK",null);
+            winAlert.create();
+            winAlert.show();
+            endGame();
     }
 
     public void endGame(){
