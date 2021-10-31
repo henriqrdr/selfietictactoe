@@ -19,6 +19,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
@@ -32,6 +33,8 @@ public class MainActivity extends AppCompatActivity {
     private String player2;
     private ImageView avatar1;
     private ImageView avatar2;
+    private TextView ply1;
+    private TextView ply2;
 
 
 
@@ -58,6 +61,9 @@ public class MainActivity extends AppCompatActivity {
 
         avatar1 = (ImageView) findViewById(R.id.imageView);
         avatar2 = (ImageView) findViewById(R.id.imageView1);
+
+        ply1 = (TextView) findViewById(R.id.textView);
+        ply2 = (TextView) findViewById(R.id.textView2);
 
 
 
@@ -156,6 +162,7 @@ public class MainActivity extends AppCompatActivity {
                     public void onClick(DialogInterface dialogInterface, int i) {
                         player2 = editText2.getText().toString();
                         takePhoto();
+                        ply1.setText(player2.toString());
                     }
                 });
                 play2.create();
@@ -171,6 +178,7 @@ public class MainActivity extends AppCompatActivity {
                     public void onClick(DialogInterface dialogInterface, int i) {
                         player1 = editText1.getText().toString();
                         takePhoto2();
+                        ply2.setText(player1.toString());
                     }
                 });
                 play1.create();
