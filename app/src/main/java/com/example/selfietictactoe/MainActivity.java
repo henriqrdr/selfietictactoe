@@ -3,14 +3,22 @@ package com.example.selfietictactoe;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
 
+import android.Manifest;
 import android.content.DialogInterface;
+import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
+import android.graphics.ImageDecoder;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
@@ -22,12 +30,19 @@ public class MainActivity extends AppCompatActivity {
     private String winner;
     private String player1;
     private String player2;
+    private ImageView avatar1;
+    private ImageView avatar2;
+
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        if(ActivityCompat.checkSelfPermission(this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED){
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.CAMERA},0);
+        }
 
         qtd = 1;
         player = 1;
@@ -40,6 +55,12 @@ public class MainActivity extends AppCompatActivity {
         b[6] = findViewById(R.id.button7);
         b[7] = findViewById(R.id.button8);
         b[8] = findViewById(R.id.button9);
+
+        avatar1 = (ImageView) findViewById(R.id.imageView);
+        avatar2 = (ImageView) findViewById(R.id.imageView1);
+
+
+
 
         b[0].setOnClickListener(new View.OnClickListener() {
             @Override
@@ -104,6 +125,8 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
+
+
     }
 
     @Override
@@ -132,6 +155,7 @@ public class MainActivity extends AppCompatActivity {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
                         player2 = editText2.getText().toString();
+                        takePhoto();
                     }
                 });
                 play2.create();
@@ -146,6 +170,7 @@ public class MainActivity extends AppCompatActivity {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
                         player1 = editText1.getText().toString();
+                        takePhoto2();
                     }
                 });
                 play1.create();
@@ -242,6 +267,34 @@ public class MainActivity extends AppCompatActivity {
         player=0;
         player1="";
         player2="";
+        qtd = 0;
+    }
+
+
+    public void takePhoto(){
+        Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        startActivityForResult(intent,1);
+    }
+    public void takePhoto2(){
+        Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        startActivityForResult(intent,2);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data){
+        if(requestCode == 1 && resultCode == RESULT_OK){
+            Bundle extras = data.getExtras();
+            Bitmap image = (Bitmap) extras.get("data");
+            avatar1.setImageBitmap(image);
+
+        }
+        if(requestCode == 2 && resultCode == RESULT_OK){
+            Bundle extras = data.getExtras();
+            Bitmap image = (Bitmap) extras.get("data");
+            avatar2.setImageBitmap(image);
+
+        }
+        super.onActivityResult(requestCode,resultCode,data);
     }
 
 
